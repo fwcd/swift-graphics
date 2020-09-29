@@ -1,0 +1,21 @@
+name: Linux
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-18.04
+    strategy:
+      matrix:
+        swift: ['5.3']
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Install Swiftenv
+      run: git clone --depth 1 https://github.com/kylef/swiftenv.git ~/.swiftenv
+    - name: Install Swift
+      run: ~/.swiftenv/bin/swiftenv install ${{ matrix.swift }}
+    - name: Build
+      run: ~/.swiftenv/shims/swift build
+    - name: Test
+      run: ~/.swiftenv/shims/swift test

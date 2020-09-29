@@ -1,5 +1,7 @@
 # Swift Graphics
 
+[![Linux](https://github.com/fwcd/swift-graphics/workflows/Linux/badge.svg)](https://github.com/fwcd/swift-graphics/actions)
+
 Cross-platform 2D drawing library for Swift based on Cairo.
 
 ## Example
