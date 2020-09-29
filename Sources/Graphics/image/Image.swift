@@ -3,7 +3,7 @@ import Foundation
 import Logging
 import Utils
 
-fileprivate let log = Logger(label: "D2Graphics.Image")
+fileprivate let log = Logger(label: "Graphics.Image")
 
 /**
  * An image that internally wraps a Cairo surface.
