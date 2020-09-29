@@ -3,6 +3,7 @@
 Cross-platform 2D drawing library for Swift based on Cairo.
 
 ## System Dependencies
+* Swift 5.2+
 
 ### Linux
 * `sudo apt-get install libcairo2-dev`
@@ -15,4 +16,8 @@ Cross-platform 2D drawing library for Swift based on Cairo.
 ### macOS
 * `brew install cairo`
 
+## Building
+`swift build`
 
+## Testing
+`swift test`
