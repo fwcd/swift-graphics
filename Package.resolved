@@ -11,6 +11,15 @@
         }
       },
       {
+        "package": "Cairo",
+        "repositoryURL": "https://github.com/PureSwift/Cairo.git",
+        "state": {
+          "branch": null,
+          "revision": "b5f867a56a20d2f0064ccb975ae4a669b374e9e0",
+          "version": null
+        }
+      },
+      {
         "package": "swift-log",
         "repositoryURL": "https://github.com/apple/swift-log.git",
         "state": {
