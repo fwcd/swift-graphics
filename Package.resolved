@@ -12,10 +12,10 @@
       },
       {
         "package": "Cairo",
-        "repositoryURL": "https://github.com/PureSwift/Cairo.git",
+        "repositoryURL": "https://github.com/fwcd/swift-cairo.git",
         "state": {
           "branch": null,
-          "revision": "b5f867a56a20d2f0064ccb975ae4a669b374e9e0",
+          "revision": "6aaae4301a6ee611bb3977547bbef62d3e4c9ac8",
           "version": null
         }
       },

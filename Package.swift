@@ -16,7 +16,7 @@ let package = Package(
         // Dependencies declare other packages that this package depends on.
         .package(url: "https://github.com/apple/swift-log.git", from: "1.4.0"),
         .package(url: "https://github.com/fwcd/swift-utils.git", from: "1.0.0"),
-        .package(url: "https://github.com/PureSwift/Cairo.git", .revision("b5f867a56a20d2f0064ccb975ae4a669b374e9e0"))
+        .package(name: "Cairo", url: "https://github.com/fwcd/swift-cairo.git", .revision("6aaae4301a6ee611bb3977547bbef62d3e4c9ac8"))
     ],
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
