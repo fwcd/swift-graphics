@@ -8,7 +8,7 @@ Cross-platform 2D drawing library for Swift based on Cairo.
 ```swift
 // Create a new image and a graphics context
 let image = try Image(width: 300, height: 300)
-var graphics = CairoGraphics(fromImage: image)
+let graphics = CairoGraphics(fromImage: image)
 
 // Draw some shapes
 graphics.draw(LineSegment(fromX: 20, y: 20, toX: 50, y: 30))
