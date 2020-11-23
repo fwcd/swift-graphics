@@ -11,10 +11,19 @@ fileprivate let log = Logger(label: "Graphics.Image")
 public class Image {
     private let rawSurface: Surface.Image
     private var dirty: Bool = false
+    internal var flushed: Bool = false
 
     public var width: Int { return surface.width }
     public var height: Int { return surface.height }
     public var size: Vec2<Int> { return Vec2(x: width, y: height) }
+
+    private var flushedSurface: Surface.Image {
+        if !flushed {
+            rawSurface.flush()
+            flushed = true
+        }
+        return rawSurface
+    }
     internal var surface: Surface.Image {
         if dirty {
             rawSurface.markDirty()
@@ -50,8 +59,8 @@ public class Image {
     public subscript(_ y: Int, _ x: Int) -> Color {
         get {
             var pixel: Color? = nil
-            rawSurface.withUnsafeMutableBytes { ptr in
-                let i: Int = (y * rawSurface.stride) + (x * bytesPerPixel!)
+            flushedSurface.withUnsafeMutableBytes { ptr in
+                let i: Int = (y * flushedSurface.stride) + (x * bytesPerPixel!)
                 let colorPtr = UnsafeMutableRawPointer(ptr + i)
                 pixel = readColorFrom(pixel: colorPtr)
             }
@@ -60,8 +69,8 @@ public class Image {
         }
         set(newColor) {
             dirty = true
-            rawSurface.withUnsafeMutableBytes { ptr in
-                let i: Int = (y * rawSurface.stride) + (x * bytesPerPixel!)
+            flushedSurface.withUnsafeMutableBytes { ptr in
+                let i: Int = (y * flushedSurface.stride) + (x * bytesPerPixel!)
                 let colorPtr = UnsafeMutableRawPointer(ptr + i)
                 store(color: newColor, inPixel: colorPtr)
             }

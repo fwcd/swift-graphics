@@ -3,40 +3,49 @@ import Utils
 
 public class CairoGraphics: Graphics {
     private let context: Cairo.Context
-
-    init(surface: Surface) {
-        context = Cairo.Context(surface: surface)
-    }
+    private let image: Image // only kept for marking as non-flushed
 
     deinit {
         flush()
     }
 
-    public convenience init(fromImage image: Image) {
-        self.init(surface: image.surface)
+    public init(fromImage image: Image) {
+        context = Cairo.Context(surface: image.surface)
+        self.image = image
+    }
+
+    private func markImageAsUnflushed() {
+        image.flushed = false
     }
 
     public func flush() {
         context.surface.flush()
+        image.flushed = true
     }
 
     public func save() {
+        markImageAsUnflushed()
         context.save()
     }
 
     public func restore() {
+        markImageAsUnflushed()
         context.restore()
     }
 
     public func translate(by offset: Vec2<Double>) {
+        markImageAsUnflushed()
         context.translate(x: offset.x, y: offset.y)
     }
 
     public func rotate(by angle: Double) {
+        markImageAsUnflushed()
         context.rotate(angle)
     }
 
     public func draw(_ line: LineSegment<Double>) {
+        markImageAsUnflushed()
+
         context.setSource(color: line.color.asDoubleTuple)
         context.move(to: line.start.asTuple)
         context.line(to: line.end.asTuple)
@@ -44,6 +53,8 @@ public class CairoGraphics: Graphics {
     }
 
     public func draw(_ rect: Rectangle<Double>) {
+        markImageAsUnflushed()
+
         // Floating point comparison is intended since this flag only allows potential optimizations
         var rotated = false
 
@@ -86,6 +97,8 @@ public class CairoGraphics: Graphics {
     }
 
     private func draw(_ surface: Surface, of originalSize: Vec2<Int>, at position: Vec2<Double>, withSize size: Vec2<Int>, rotation optionalRotation: Double?) {
+        markImageAsUnflushed()
+
         context.save()
 
         let scaleFactor = Vec2(x: Double(size.x) / Double(originalSize.x), y: Double(size.y) / Double(originalSize.y))
@@ -108,6 +121,8 @@ public class CairoGraphics: Graphics {
     }
 
     public func draw(_ text: Text) {
+        markImageAsUnflushed()
+
         context.setSource(color: text.color.asDoubleTuple)
         context.setFont(size: text.fontSize)
         context.move(to: text.position.asTuple)
@@ -115,6 +130,8 @@ public class CairoGraphics: Graphics {
     }
 
     public func draw(_ ellipse: Ellipse<Double>) {
+        markImageAsUnflushed()
+
         context.save()
         context.translate(x: ellipse.center.x, y: ellipse.center.y)
         context.rotate(ellipse.rotation)
