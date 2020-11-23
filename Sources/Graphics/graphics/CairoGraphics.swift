@@ -8,6 +8,10 @@ public class CairoGraphics: Graphics {
         context = Cairo.Context(surface: surface)
     }
 
+    deinit {
+        flush()
+    }
+
     public convenience init(fromImage image: Image) {
         self.init(surface: image.surface)
     }
