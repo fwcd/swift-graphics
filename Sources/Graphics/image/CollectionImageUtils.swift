@@ -8,7 +8,7 @@ extension Array where Element == Image {
         let totalHeight = map { $0.height }.max() ?? 0
         guard let composed = try? Image(width: totalWidth, height: totalHeight) else { return nil }
 
-        var graphics = CairoGraphics(fromImage: composed)
+        let graphics = CairoGraphics(fromImage: composed)
         var pos = Vec2<Double>(x: 0.0, y: 0.0)
 
         for image in self {
