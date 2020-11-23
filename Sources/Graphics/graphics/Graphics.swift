@@ -1,6 +1,8 @@
 import Utils
 
 public protocol Graphics {
+    mutating func flush()
+
     mutating func save()
 
     mutating func restore()

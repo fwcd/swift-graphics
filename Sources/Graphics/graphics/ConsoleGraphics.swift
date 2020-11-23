@@ -4,6 +4,10 @@ import Logging
 fileprivate let log = Logger(label: "Graphics.ConsoleGraphics")
 
 public struct ConsoleGraphics: Graphics {
+    public func flush() {
+        log.info("Flushed")
+    }
+
     public func save() {
         log.info("Saved context")
     }

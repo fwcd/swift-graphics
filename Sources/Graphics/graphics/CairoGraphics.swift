@@ -1,41 +1,45 @@
 import Cairo
 import Utils
 
-public struct CairoGraphics: Graphics {
+public class CairoGraphics: Graphics {
     private let context: Cairo.Context
 
     init(surface: Surface) {
         context = Cairo.Context(surface: surface)
     }
 
-    public init(fromImage image: Image) {
+    public convenience init(fromImage image: Image) {
         self.init(surface: image.surface)
     }
 
-    public mutating func save() {
+    public func flush() {
+        context.surface.flush()
+    }
+
+    public func save() {
         context.save()
     }
 
-    public mutating func restore() {
+    public func restore() {
         context.restore()
     }
 
-    public mutating func translate(by offset: Vec2<Double>) {
+    public func translate(by offset: Vec2<Double>) {
         context.translate(x: offset.x, y: offset.y)
     }
 
-    public mutating func rotate(by angle: Double) {
+    public func rotate(by angle: Double) {
         context.rotate(angle)
     }
 
-    public mutating func draw(_ line: LineSegment<Double>) {
+    public func draw(_ line: LineSegment<Double>) {
         context.setSource(color: line.color.asDoubleTuple)
         context.move(to: line.start.asTuple)
         context.line(to: line.end.asTuple)
         context.stroke()
     }
 
-    public mutating func draw(_ rect: Rectangle<Double>) {
+    public func draw(_ rect: Rectangle<Double>) {
         // Floating point comparison is intended since this flag only allows potential optimizations
         var rotated = false
 
@@ -69,15 +73,15 @@ public struct CairoGraphics: Graphics {
         }
     }
 
-    public mutating func draw(_ image: Image, at position: Vec2<Double>, withSize size: Vec2<Int>, rotation optionalRotation: Double?) {
+    public func draw(_ image: Image, at position: Vec2<Double>, withSize size: Vec2<Int>, rotation optionalRotation: Double?) {
         draw(image.surface, of: image.size, at: position, withSize: size, rotation: optionalRotation)
     }
 
-    public mutating func draw(_ svg: SVG, at position: Vec2<Double>, withSize size: Vec2<Int>, rotation optionalRotation: Double?) {
+    public func draw(_ svg: SVG, at position: Vec2<Double>, withSize size: Vec2<Int>, rotation optionalRotation: Double?) {
         draw(svg.surface, of: svg.size, at: position, withSize: size, rotation: optionalRotation)
     }
 
-    private mutating func draw(_ surface: Surface, of originalSize: Vec2<Int>, at position: Vec2<Double>, withSize size: Vec2<Int>, rotation optionalRotation: Double?) {
+    private func draw(_ surface: Surface, of originalSize: Vec2<Int>, at position: Vec2<Double>, withSize size: Vec2<Int>, rotation optionalRotation: Double?) {
         context.save()
 
         let scaleFactor = Vec2(x: Double(size.x) / Double(originalSize.x), y: Double(size.y) / Double(originalSize.y))
@@ -99,14 +103,14 @@ public struct CairoGraphics: Graphics {
         context.restore()
     }
 
-    public mutating func draw(_ text: Text) {
+    public func draw(_ text: Text) {
         context.setSource(color: text.color.asDoubleTuple)
         context.setFont(size: text.fontSize)
         context.move(to: text.position.asTuple)
         context.show(text: text.value)
     }
 
-    public mutating func draw(_ ellipse: Ellipse<Double>) {
+    public func draw(_ ellipse: Ellipse<Double>) {
         context.save()
         context.translate(x: ellipse.center.x, y: ellipse.center.y)
         context.rotate(ellipse.rotation)
