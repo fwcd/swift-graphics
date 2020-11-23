@@ -3,11 +3,11 @@ import Foundation
 import Cairo
 
 extension Image {
-    public init(fromPng data: Data) throws {
+    public convenience init(fromPng data: Data) throws {
         self.init(from: try Surface.Image(png: data))
     }
 
-    public init(fromPngFile url: URL) throws {
+    public convenience init(fromPngFile url: URL) throws {
         let fileManager = FileManager.default
         guard fileManager.fileExists(atPath: url.path) else { throw DiskFileError.fileNotFound(url) }
 
@@ -18,7 +18,7 @@ extension Image {
         }
     }
 
-    public init(fromPngFile filePath: String) throws {
+    public convenience init(fromPngFile filePath: String) throws {
         try self.init(fromPngFile: URL(fileURLWithPath: filePath))
     }
 

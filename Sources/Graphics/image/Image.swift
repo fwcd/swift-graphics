@@ -8,12 +8,20 @@ fileprivate let log = Logger(label: "Graphics.Image")
 /**
  * An image that internally wraps a Cairo surface.
  */
-public struct Image {
-    let surface: Surface.Image
+public class Image {
+    private let rawSurface: Surface.Image
+    private var dirty: Bool = false
 
     public var width: Int { return surface.width }
     public var height: Int { return surface.height }
     public var size: Vec2<Int> { return Vec2(x: width, y: height) }
+    internal var surface: Surface.Image {
+        if dirty {
+            rawSurface.markDirty()
+            dirty = false
+        }
+        return rawSurface
+    }
 
     // Source: https://www.cairographics.org/manual/cairo-Image-Surfaces.html#cairo-format-t
     private var bytesPerPixel: Int? {
@@ -26,23 +34,24 @@ public struct Image {
         }
     }
 
-    init(from surface: Surface.Image) {
-        self.surface = surface
+    init(from rawSurface: Surface.Image) {
+        self.rawSurface = rawSurface
     }
 
-    public init(width: Int, height: Int) throws {
-        self.init(from: try Surface.Image(format: .argb32, width: width, height: height))
+    public convenience init(width: Int, height: Int) throws {
+        let surface = try Surface.Image(format: .argb32, width: width, height: height)
+        self.init(from: surface)
     }
 
-    public init(fromSize size: Vec2<Int>) throws {
+    public convenience init(fromSize size: Vec2<Int>) throws {
         try self.init(width: size.x, height: size.y)
     }
 
     public subscript(_ y: Int, _ x: Int) -> Color {
         get {
             var pixel: Color? = nil
-            surface.withUnsafeMutableBytes { ptr in
-                let i: Int = (y * surface.stride) + (x * bytesPerPixel!)
+            rawSurface.withUnsafeMutableBytes { ptr in
+                let i: Int = (y * rawSurface.stride) + (x * bytesPerPixel!)
                 let colorPtr = UnsafeMutableRawPointer(ptr + i)
                 pixel = readColorFrom(pixel: colorPtr)
             }
@@ -50,8 +59,9 @@ public struct Image {
             return pixel ?? Colors.transparent
         }
         set(newColor) {
-            surface.withUnsafeMutableBytes { ptr in
-                let i: Int = (y * surface.stride) + (x * bytesPerPixel!)
+            dirty = true
+            rawSurface.withUnsafeMutableBytes { ptr in
+                let i: Int = (y * rawSurface.stride) + (x * bytesPerPixel!)
                 let colorPtr = UnsafeMutableRawPointer(ptr + i)
                 store(color: newColor, inPixel: colorPtr)
             }
@@ -60,7 +70,7 @@ public struct Image {
 
     /** Converts a color to the image's native representation. */
     private func store(color: Color, inPixel ptr: UnsafeMutableRawPointer) {
-        switch surface.format {
+        switch rawSurface.format {
             case .argb32?:
                 ptr.storeBytes(of: color.argb, as: UInt32.self)
             case .rgb24?:
@@ -72,7 +82,7 @@ public struct Image {
 
     /** Convert's a color in the image's native representation to a color. */
     private func readColorFrom(pixel ptr: UnsafeMutableRawPointer) -> Color? {
-        switch surface.format {
+        switch rawSurface.format {
             case .argb32?:
                 return Color(argb: ptr.load(as: UInt32.self))
             case .rgb24?:
