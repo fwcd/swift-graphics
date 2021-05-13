@@ -11,12 +11,12 @@
         }
       },
       {
-        "package": "Cairo",
+        "package": "swift-cairo",
         "repositoryURL": "https://github.com/fwcd/swift-cairo.git",
         "state": {
           "branch": null,
-          "revision": "6aaae4301a6ee611bb3977547bbef62d3e4c9ac8",
-          "version": null
+          "revision": "e3f1e695f1630022ee65241744a81bc1e056d0bb",
+          "version": "1.3.1"
         }
       },
       {
