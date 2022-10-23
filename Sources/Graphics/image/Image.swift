@@ -65,7 +65,7 @@ public class Image {
                 pixel = readColorFrom(pixel: colorPtr)
             }
 
-            return pixel ?? Colors.transparent
+            return pixel ?? .transparent
         }
         set(newColor) {
             dirty = true
