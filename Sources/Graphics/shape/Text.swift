@@ -10,7 +10,7 @@ public struct Text {
         _ value: String,
         withSize fontSize: Double = 12,
         at position: Vec2<Double> = Vec2(x: 0, y: 12),
-        color: Color = Colors.white
+        color: Color = .white
     ) {
         self.value = value
         self.fontSize = fontSize
