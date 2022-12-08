@@ -1,0 +1,34 @@
+name: Build
+
+on:
+  push:
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        os: ['ubuntu-20.04', 'macos-12']
+        swift: ['5.7']
+
+    runs-on: ${{ matrix.os }}
+    steps:
+    - uses: actions/checkout@v3
+    - uses: swift-actions/setup-swift@v1
+      with:
+        swift-version: ${{ matrix.swift }}
+    - name: Install system dependencies (Linux)
+      if: runner.os == 'Linux'
+      run: sudo apt-get update && sudo apt-get install -y libcairo2-dev
+    - name: Install system dependencies (macOS)
+      if: runner.os == 'macOS'
+      run: brew install cairo freetype2
+      # Workaround for FFI modulemap redefinition error, see
+      # - https://github.com/orgs/Homebrew/discussions/4025
+      # - https://github.com/tauri-apps/tauri/issues/1150#issuecomment-768310979
+    - name: Remove duplicate FFI headers (macOS)
+      if: runner.os == 'macOS'
+      run: find "/Library/Developer/CommandLineTools/SDKs" -name "MacOSX*.sdk" -type d -depth 1 -exec bash -c '[ -d {}/usr/include/ffi ] && sudo mv {}/usr/include/ffi{,.backup}' \;
+    - name: Build
+      run: swift build
+    - name: Test
+      run: swift test
