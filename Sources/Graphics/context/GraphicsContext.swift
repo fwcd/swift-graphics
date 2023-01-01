@@ -3,6 +3,7 @@ import Utils
 /** A stateful 2D drawing environment. */
 public protocol GraphicsContext {
     associatedtype Image: Graphics.Image
+    associatedtype SVG: Graphics.Image
 
     /** Creates a new context with the given width and height. */
     init(width: Int, height: Int) throws
@@ -26,54 +27,54 @@ public protocol GraphicsContext {
     func rotate(by angle: Double)
 
     /** Draws the given line segment to this context. */
-    func draw(_ line: LineSegment<Double>)
+    func draw(line: LineSegment<Double>)
 
     /** Draws the given rectangle to this context. */
-    func draw(_ rect: Rectangle<Double>)
+    func draw(rect: Rectangle<Double>)
 
     /** Draws the given ellipse to this context. */
-    func draw(_ ellipse: Ellipse<Double>)
+    func draw(ellipse: Ellipse<Double>)
 
     /** Draws the given image to this context. */
-    func draw(_ image: Image, at position: Vec2<Double>, withSize size: Vec2<Int>, rotation: Double?)
+    func draw(image: Image, at position: Vec2<Double>, withSize size: Vec2<Int>, rotation: Double?)
 
     /** Draws the given SVG to this context. */
-    func draw(_ svg: SVG, at position: Vec2<Double>, withSize size: Vec2<Int>, rotation: Double?)
+    func draw(svg: SVG, at position: Vec2<Double>, withSize size: Vec2<Int>, rotation: Double?)
 
     /** Draws the given text to this context. */
-    func draw(_ text: Text)
+    func draw(text: Text)
 }
 
 public extension GraphicsContext {
-    func draw(_ image: Image) {
-        draw(image, at: Vec2(x: 0, y: 0))
+    func draw(image: Image) {
+        draw(image: image, at: Vec2(x: 0, y: 0))
     }
 
-    func draw(_ image: Image, at position: Vec2<Double>) {
-        draw(image, at: position, withSize: image.size)
+    func draw(image: Image, at position: Vec2<Double>) {
+        draw(image: image, at: position, withSize: image.size)
     }
 
-    func draw(_ image: Image, at position: Vec2<Double>, rotation: Double?) {
-        draw(image, at: position, withSize: image.size, rotation: rotation)
+    func draw(image: Image, at position: Vec2<Double>, rotation: Double?) {
+        draw(image: image, at: position, withSize: image.size, rotation: rotation)
     }
 
-    func draw(_ image: Image, at position: Vec2<Double>, withSize size: Vec2<Int>) {
-        draw(image, at: position, withSize: size, rotation: nil)
+    func draw(image: Image, at position: Vec2<Double>, withSize size: Vec2<Int>) {
+        draw(image: image, at: position, withSize: size, rotation: nil)
     }
 
-    func draw(_ svg: SVG) {
-        draw(svg, at: Vec2(x: 0, y: 0))
+    func draw(svg: SVG) {
+        draw(svg: svg, at: Vec2(x: 0, y: 0))
     }
 
-    func draw(_ svg: SVG, at position: Vec2<Double>) {
-        draw(svg, at: position, withSize: svg.size)
+    func draw(svg: SVG, at position: Vec2<Double>) {
+        draw(svg: svg, at: position, withSize: svg.size)
     }
 
-    func draw(_ svg: SVG, at position: Vec2<Double>, rotation: Double?) {
-        draw(svg, at: position, withSize: svg.size, rotation: rotation)
+    func draw(svg: SVG, at position: Vec2<Double>, rotation: Double?) {
+        draw(svg: svg, at: position, withSize: svg.size, rotation: rotation)
     }
 
-    func draw(_ svg: SVG, at position: Vec2<Double>, withSize size: Vec2<Int>) {
-        draw(svg, at: position, withSize: size, rotation: nil)
+    func draw(svg: SVG, at position: Vec2<Double>, withSize size: Vec2<Int>) {
+        draw(svg: svg, at: position, withSize: size, rotation: nil)
     }
 }

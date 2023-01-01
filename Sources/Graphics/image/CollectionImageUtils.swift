@@ -11,7 +11,7 @@ extension Array where Element == DefaultGraphicsContext.Image {
         var pos = Vec2<Double>(x: 0.0, y: 0.0)
 
         for image in self {
-            ctx.draw(image, at: pos)
+            ctx.draw(image: image, at: pos)
             pos = pos + Vec2(x: Double(image.width), y: 0.0)
         }
 

@@ -1,7 +1,9 @@
+#if canImport(Cairo)
 import Utils
 
 extension HTTPRequest {
-    public func fetchPNGAsync() -> Promise<Image, Error> {
-        runAsync().mapCatching { try Image(fromPng: $0) }
+    public func fetchPNGAsync() -> Promise<CairoImage, Error> {
+        runAsync().mapCatching { try CairoImage(pngData: $0) }
     }
 }
+#endif

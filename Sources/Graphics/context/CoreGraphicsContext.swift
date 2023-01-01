@@ -92,34 +92,34 @@ public final class CoreGraphicsContext: GraphicsContext {
         }
     }
 
-    public func draw(_ line: LineSegment<Double>) {
+    public func draw(line: LineSegment<Double>) {
         withPath(color: line.color, isFilled: false) {
             cgContext.move(to: CGPoint(line.start))
             cgContext.addLine(to: CGPoint(line.end))
         }
     }
 
-    public func draw(_ rect: Rectangle<Double>) {
+    public func draw(rect: Rectangle<Double>) {
         withPath(color: rect.color, isFilled: rect.isFilled) {
             cgContext.addRect(CGRect(rect))
         }
     }
 
-    public func draw(_ ellipse: Ellipse<Double>) {
+    public func draw(ellipse: Ellipse<Double>) {
         withPath(color: ellipse.color, isFilled: ellipse.isFilled) {
             cgContext.addEllipse(in: CGRect(ellipse))
         }
     }
 
-    public func draw(_ image: CoreGraphicsImage, at position: Vec2<Double>, withSize size: Vec2<Int>, rotation: Double?) {
+    public func draw(image: CoreGraphicsImage, at position: Vec2<Double>, withSize size: Vec2<Int>, rotation: Double?) {
         cgContext.draw(image.cgImage, in: CGRect(origin: CGPoint(position), size: CGSize(size)))
     }
 
-    public func draw(_ svg: SVG, at position: Vec2<Double>, withSize size: Vec2<Int>, rotation: Double?) {
-        fatalError("Cannot draw SVGs with CoreGraphics (yet)")
+    public func draw(svg: NoImage, at position: Vec2<Double>, withSize size: Vec2<Int>, rotation: Double?) {
+        // Not supported yet
     }
 
-    public func draw(_ text: Text) {
+    public func draw(text: Text) {
         let font = CTFontCreateWithName("Helvetica" as CFString, text.fontSize, nil)
         let attributes: [NSAttributedString.Key: Any] = [.font: font, .foregroundColor: text.color.asCGColor]
         let attributedString = NSAttributedString(string: text.value, attributes: attributes)
