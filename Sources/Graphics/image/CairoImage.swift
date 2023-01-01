@@ -47,6 +47,14 @@ public final class CairoImage: BufferedImage {
         self.rawSurface = rawSurface
     }
 
+    public convenience init(pngData: Data) throws {
+        self.init(rawSurface: try Surface.Image(png: pngData))
+    }
+
+    public func pngEncoded() throws -> Data {
+        return try surface.writePNG()
+    }
+
     public convenience init(width: Int, height: Int) throws {
         let surface = try Surface.Image(format: .argb32, width: width, height: height)
         self.init(rawSurface: surface)
@@ -100,31 +108,6 @@ public final class CairoImage: BufferedImage {
                 log.warning("Color not read color from an image with the format \(surface.format.map { "\($0)" } ?? "nil")")
                 return nil
         }
-    }
-}
-
-extension CairoImage {
-    public convenience init(pngData data: Data) throws {
-        self.init(rawSurface: try Surface.Image(png: data))
-    }
-
-    public convenience init(pngFileUrl url: URL) throws {
-        let fileManager = FileManager.default
-        guard fileManager.fileExists(atPath: url.path) else { throw DiskFileError.fileNotFound(url) }
-
-        if let data = fileManager.contents(atPath: url.path) {
-            try self.init(pngData: data)
-        } else {
-            throw DiskFileError.noData("Image at \(url) contained no data")
-        }
-    }
-
-    public convenience init(pngFilePath filePath: String) throws {
-        try self.init(pngFileUrl: URL(fileURLWithPath: filePath))
-    }
-
-    public func pngEncoded() throws -> Data {
-        return try surface.writePNG()
     }
 }
 #endif
