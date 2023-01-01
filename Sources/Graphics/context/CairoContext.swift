@@ -1,20 +1,29 @@
+#if canImport(Cairo)
 import Cairo
 import Utils
 
 /**
  * A graphics context that uses the Cairo library for its drawing primitives.
  */
-public class CairoContext: GraphicsContext {
+public final class CairoContext: GraphicsContext {
     private let context: Cairo.Context
-    private let image: Image // only kept for marking as non-flushed
+    private let image: CairoImage
 
     deinit {
         flush()
     }
 
-    public init(fromImage image: Image) {
+    public init(image: CairoImage) {
         context = Cairo.Context(surface: image.surface)
         self.image = image
+    }
+
+    public convenience init(width: Int, height: Int) throws {
+        self.init(image: try CairoImage(width: width, height: height))
+    }
+
+    public func makeImage() -> CairoImage {
+        image
     }
 
     private func markImageAsUnflushed() {
@@ -91,7 +100,7 @@ public class CairoContext: GraphicsContext {
         }
     }
 
-    public func draw(_ image: Image, at position: Vec2<Double>, withSize size: Vec2<Int>, rotation optionalRotation: Double?) {
+    public func draw(_ image: CairoImage, at position: Vec2<Double>, withSize size: Vec2<Int>, rotation optionalRotation: Double?) {
         draw(image.surface, of: image.size, at: position, withSize: size, rotation: optionalRotation)
     }
 
@@ -154,3 +163,4 @@ public class CairoContext: GraphicsContext {
         context.restore()
     }
 }
+#endif

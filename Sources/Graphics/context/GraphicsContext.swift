@@ -2,6 +2,14 @@ import Utils
 
 /** A stateful 2D drawing environment. */
 public protocol GraphicsContext {
+    associatedtype Image: Graphics.Image
+
+    /** Creates a new context with the given width and height. */
+    init(width: Int, height: Int) throws
+
+    /** Creates an image from this context. */
+    func makeImage() throws -> Image
+
     /** Flushes the changes to the underlying graphics. */
     func flush()
 
