@@ -1,6 +1,6 @@
 import Utils
 
-public protocol Graphics {
+public protocol GraphicsContext {
     func flush()
 
     func save()
@@ -24,7 +24,7 @@ public protocol Graphics {
     func draw(_ text: Text)
 }
 
-public extension Graphics {
+public extension GraphicsContext {
     func draw(_ image: Image) {
         draw(image, at: Vec2(x: 0, y: 0))
     }

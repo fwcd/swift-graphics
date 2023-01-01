@@ -32,7 +32,7 @@ public class Image {
         return rawSurface
     }
 
-    // Source: https://www.cairographics.org/manual/cairo-Image-Surfaces.html#cairo-format-t
+    // Source: https://www.CairoContext.org/manual/cairo-Image-Surfaces.html#cairo-format-t
     private var bytesPerPixel: Int? {
         switch surface.format {
             case .argb32?: return 4

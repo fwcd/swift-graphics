@@ -3,7 +3,7 @@ import Logging
 
 fileprivate let log = Logger(label: "Graphics.ConsoleGraphics")
 
-public struct ConsoleGraphics: Graphics {
+public struct ConsoleContext: GraphicsContext {
     public func flush() {
         log.info("Flushed")
     }

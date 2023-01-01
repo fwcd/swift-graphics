@@ -1,7 +1,7 @@
 import Cairo
 import Utils
 
-public class CairoGraphics: Graphics {
+public class CairoContext: GraphicsContext {
     private let context: Cairo.Context
     private let image: Image // only kept for marking as non-flushed
 
