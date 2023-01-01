@@ -2,7 +2,10 @@
 
 [![Build](https://github.com/fwcd/swift-graphics/actions/workflows/build.yml/badge.svg)](https://github.com/fwcd/swift-graphics/actions/workflows/build.yml)
 
-Cross-platform 2D drawing library for Swift based on Cairo.
+2D drawing library for Swift with multiple backends, currently including
+
+- Cairo (cross-platform)
+- Core Graphics (Apple platforms)
 
 ## Example
 
