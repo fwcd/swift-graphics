@@ -7,10 +7,10 @@ let package = Package(
     name: "swift-graphics",
     products: [
         // Products define the executables and libraries a package produces, and make them visible to other packages.
-        .library(
-            name: "Graphics",
-            targets: ["Graphics"]
-        )
+        .library(name: "Graphics", targets: ["Graphics"]),
+        .library(name: "PlatformGraphics", targets: ["PlatformGraphics"]),
+        .library(name: "CairoGraphics", targets: ["CairoGraphics"]),
+        .library(name: "CoreGraphicsGraphics", targets: ["CoreGraphicsGraphics"]),
     ],
     dependencies: [
         // Dependencies declare other packages that this package depends on.
