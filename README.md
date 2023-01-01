@@ -8,6 +8,7 @@ Cross-platform 2D drawing library for Swift based on Cairo.
 
 ```swift
 import PlatformGraphics
+import Utils
 
 // Create a new image and a graphics context
 let ctx = try PlatformGraphicsContext(width: 300, height: 300)
@@ -22,6 +23,14 @@ ctx.draw(ellipse: Ellipse(centerX: 150, y: 80, radius: 40))
 let image = try ctx.makeImage()
 let data = try image.pngEncoded()
 ```
+
+The full example can be found in [`Snippets/DrawShapes.swift`](Snippets/DrawShapes.swift). To run it, invoke
+
+```sh
+swift run DrawShapes
+```
+
+The resulting PNG will be written to `Output/shapes.png`.
 
 ## System Dependencies
 

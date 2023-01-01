@@ -1,11 +1,11 @@
 #if canImport(CairoGraphics)
 
-import CairoGraphics
+@_exported import CairoGraphics
 public typealias PlatformGraphicsContext = CairoContext
 
 #elseif canImport(CoreGraphicsGraphics)
 
-import CoreGraphicsGraphics
+@_exported import CoreGraphicsGraphics
 public typealias PlatformGraphicsContext = CoreGraphicsContext
 
 #else

@@ -22,7 +22,7 @@ public final class CairoContext: GraphicsContext {
         self.init(image: try CairoImage(width: width, height: height))
     }
 
-    public func makeImage() -> CairoImage {
+    public func makeImage() throws -> CairoImage {
         image
     }
 
