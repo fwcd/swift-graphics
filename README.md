@@ -5,10 +5,12 @@
 Cross-platform 2D drawing library for Swift based on Cairo.
 
 ## Example
+
 ```swift
+import PlatformGraphics
+
 // Create a new image and a graphics context
-let image = try DefaultImage(width: 300, height: 300)
-let ctx = DefaultGraphicsContext(fromImage: image)
+let ctx = try PlatformGraphicsContext(width: 300, height: 300)
 
 // Draw some shapes
 ctx.draw(line: LineSegment(fromX: 20, y: 20, toX: 50, y: 30))
@@ -17,20 +19,25 @@ ctx.draw(text: Text("Test", at: Vec2(x: 0, y: 15)))
 ctx.draw(ellipse: Ellipse(centerX: 150, y: 80, radius: 40))
 
 // Encode the image to a byte buffer
+let image = try ctx.makeImage()
 let data = try image.pngEncoded()
 ```
 
 ## System Dependencies
-* Swift 5.2+
 
-### Linux
-* `sudo apt-get install libcairo2-dev`
-
-### macOS
-* `brew install cairo`
+* Swift 5.7+
+* For the Cairo backend (required on Linux, optional on macOS):
+    * Debian: `apt-get install libcairo2-dev`
+    * macOS: `brew install cairo`
 
 ## Building
-`swift build`
+
+```sh
+swift build
+```
 
 ## Testing
-`swift test`
+
+```sh
+swift test
+```
