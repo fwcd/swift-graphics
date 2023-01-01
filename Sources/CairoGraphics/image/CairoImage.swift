@@ -1,7 +1,7 @@
-#if canImport(Cairo)
 import Cairo
 import Foundation
 import Logging
+import Graphics
 import Utils
 
 fileprivate let log = Logger(label: "Graphics.Image")
@@ -110,4 +110,3 @@ public final class CairoImage: BufferedImage {
         }
     }
 }
-#endif

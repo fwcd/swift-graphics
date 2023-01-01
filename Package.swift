@@ -26,12 +26,40 @@ let package = Package(
             dependencies: [
                 .product(name: "Logging", package: "swift-log"),
                 .product(name: "Utils", package: "swift-utils"),
-                .product(name: "Cairo", package: "swift-cairo", condition: .when(platforms: [.android, .windows, .linux])),
+                .product(name: "Cairo", package: "swift-cairo"),
+            ]
+        ),
+        .target(
+            name: "CairoGraphics",
+            dependencies: [
+                .product(name: "Logging", package: "swift-log"),
+                .product(name: "Utils", package: "swift-utils"),
+                .product(name: "Cairo", package: "swift-cairo"),
+                .target(name: "Graphics"),
+            ]
+        ),
+        .target(
+            name: "CoreGraphicsGraphics",
+            dependencies: [
+                .product(name: "Logging", package: "swift-log"),
+                .product(name: "Utils", package: "swift-utils"),
+                .target(name: "Graphics"),
+            ]
+        ),
+        .target(
+            name: "PlatformGraphics",
+            dependencies: [
+                .product(name: "Logging", package: "swift-log"),
+                .product(name: "Utils", package: "swift-utils"),
+                .target(name: "CairoGraphics", condition: .when(platforms: [.android, .windows, .linux])),
+                .target(name: "CoreGraphicsGraphics", condition: .when(platforms: [.iOS, .macOS, .macCatalyst, .tvOS, .watchOS])),
             ]
         ),
         .testTarget(
             name: "GraphicsTests",
-            dependencies: ["Graphics"]
+            dependencies: [
+                .target(name: "Graphics"),
+            ]
         )
     ]
 )

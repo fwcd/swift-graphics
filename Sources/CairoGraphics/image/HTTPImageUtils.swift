@@ -1,4 +1,3 @@
-#if canImport(Cairo)
 import Utils
 
 extension HTTPRequest {
@@ -6,4 +5,3 @@ extension HTTPRequest {
         runAsync().mapCatching { try CairoImage(pngData: $0) }
     }
 }
-#endif

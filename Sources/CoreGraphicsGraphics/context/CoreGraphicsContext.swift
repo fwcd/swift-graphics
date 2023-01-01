@@ -2,6 +2,7 @@
 import CoreGraphics
 import CoreText
 import Foundation
+import Graphics
 import Utils
 
 #if canImport(AppKit)

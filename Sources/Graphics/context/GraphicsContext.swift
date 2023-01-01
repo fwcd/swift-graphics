@@ -2,8 +2,8 @@ import Utils
 
 /** A stateful 2D drawing environment. */
 public protocol GraphicsContext {
-    associatedtype Image: Graphics.Image
-    associatedtype SVG: Graphics.Image
+    associatedtype Image: Sized
+    associatedtype SVG: Sized
 
     /** Creates a new context with the given width and height. */
     init(width: Int, height: Int) throws

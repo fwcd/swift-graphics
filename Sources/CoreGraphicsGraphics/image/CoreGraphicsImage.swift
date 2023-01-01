@@ -2,6 +2,7 @@
 import CoreGraphics
 import ImageIO
 import Foundation
+import Graphics
 
 public struct CoreGraphicsImage: Image {
     public let cgImage: CGImage
