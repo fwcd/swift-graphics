@@ -30,7 +30,7 @@ let data = try image.pngEncoded()
 The full example can be found in [`Snippets/DrawShapes.swift`](Snippets/DrawShapes.swift). To run it, invoke
 
 ```sh
-swift run DrawShapes
+swift run DrawShapes Output/shapes.png
 ```
 
 The resulting PNG will be written to `Output/shapes.png`.
