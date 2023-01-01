@@ -1,17 +1,29 @@
 import Cairo
+import Graphics
 import Utils
 
-public class CairoGraphics: Graphics {
+/**
+ * A graphics context that uses the Cairo library for its drawing primitives.
+ */
+public final class CairoContext: GraphicsContext {
     private let context: Cairo.Context
-    private let image: Image // only kept for marking as non-flushed
+    private let image: CairoImage
 
     deinit {
         flush()
     }
 
-    public init(fromImage image: Image) {
+    public init(image: CairoImage) {
         context = Cairo.Context(surface: image.surface)
         self.image = image
+    }
+
+    public convenience init(width: Int, height: Int) throws {
+        self.init(image: try CairoImage(width: width, height: height))
+    }
+
+    public func makeImage() throws -> CairoImage {
+        image
     }
 
     private func markImageAsUnflushed() {
@@ -43,7 +55,7 @@ public class CairoGraphics: Graphics {
         context.rotate(angle)
     }
 
-    public func draw(_ line: LineSegment<Double>) {
+    public func draw(line: LineSegment<Double>) {
         markImageAsUnflushed()
 
         context.setSource(color: line.color.asDoubleTuple)
@@ -52,7 +64,7 @@ public class CairoGraphics: Graphics {
         context.stroke()
     }
 
-    public func draw(_ rect: Rectangle<Double>) {
+    public func draw(rect: Rectangle<Double>) {
         markImageAsUnflushed()
 
         // Floating point comparison is intended since this flag only allows potential optimizations
@@ -88,15 +100,15 @@ public class CairoGraphics: Graphics {
         }
     }
 
-    public func draw(_ image: Image, at position: Vec2<Double>, withSize size: Vec2<Int>, rotation optionalRotation: Double?) {
-        draw(image.surface, of: image.size, at: position, withSize: size, rotation: optionalRotation)
+    public func draw(image: CairoImage, at position: Vec2<Double>, withSize size: Vec2<Int>, rotation optionalRotation: Double?) {
+        draw(surface: image.surface, of: image.size, at: position, withSize: size, rotation: optionalRotation)
     }
 
-    public func draw(_ svg: SVG, at position: Vec2<Double>, withSize size: Vec2<Int>, rotation optionalRotation: Double?) {
-        draw(svg.surface, of: svg.size, at: position, withSize: size, rotation: optionalRotation)
+    public func draw(svg: SVG, at position: Vec2<Double>, withSize size: Vec2<Int>, rotation optionalRotation: Double?) {
+        draw(surface: svg.surface, of: svg.size, at: position, withSize: size, rotation: optionalRotation)
     }
 
-    private func draw(_ surface: Surface, of originalSize: Vec2<Int>, at position: Vec2<Double>, withSize size: Vec2<Int>, rotation optionalRotation: Double?) {
+    private func draw(surface: Surface, of originalSize: Vec2<Int>, at position: Vec2<Double>, withSize size: Vec2<Int>, rotation optionalRotation: Double?) {
         markImageAsUnflushed()
 
         context.save()
@@ -120,7 +132,7 @@ public class CairoGraphics: Graphics {
         context.restore()
     }
 
-    public func draw(_ text: Text) {
+    public func draw(text: Text) {
         markImageAsUnflushed()
 
         context.setSource(color: text.color.asDoubleTuple)
@@ -129,7 +141,7 @@ public class CairoGraphics: Graphics {
         context.show(text: text.value)
     }
 
-    public func draw(_ ellipse: Ellipse<Double>) {
+    public func draw(ellipse: Ellipse<Double>) {
         markImageAsUnflushed()
 
         context.save()

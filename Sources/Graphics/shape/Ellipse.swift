@@ -7,6 +7,10 @@ public struct Ellipse<T: IntExpressibleAlgebraicField> {
     public var isFilled: Bool
     public var rotation: T
 
+    public var boundingRectangle: Rectangle<T> {
+        Rectangle(topLeft: center - radius, size: Vec2(x: 2, y: 2) * radius, rotation: rotation, color: color, isFilled: isFilled)
+    }
+
     public init(
         center: Vec2<T> = Vec2(x: 0, y: 0),
         radius: Vec2<T> = Vec2(x: 1, y: 1),
