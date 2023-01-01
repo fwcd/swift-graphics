@@ -3,6 +3,9 @@ import Logging
 
 fileprivate let log = Logger(label: "Graphics.ConsoleGraphics")
 
+/**
+ * A simple graphics context that outputs its operations to standard out. Useful for debugging.
+ */
 public struct ConsoleContext: GraphicsContext {
     public func flush() {
         log.info("Flushed")

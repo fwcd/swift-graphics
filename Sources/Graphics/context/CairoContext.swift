@@ -1,6 +1,9 @@
 import Cairo
 import Utils
 
+/**
+ * A graphics context that uses the Cairo library for its drawing primitives.
+ */
 public class CairoContext: GraphicsContext {
     private let context: Cairo.Context
     private let image: Image // only kept for marking as non-flushed
