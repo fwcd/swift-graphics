@@ -21,7 +21,7 @@ jobs:
       run: sudo apt-get update && sudo apt-get install -y libcairo2-dev
     - name: Install system dependencies (macOS)
       if: runner.os == 'macOS'
-      run: brew install cairo freetype2
+      run: brew install pkg-config cairo freetype2
       # Workaround for FFI modulemap redefinition error, see
       # - https://github.com/orgs/Homebrew/discussions/4025
       # - https://github.com/tauri-apps/tauri/issues/1150#issuecomment-768310979
