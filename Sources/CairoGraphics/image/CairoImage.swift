@@ -4,7 +4,7 @@ import Logging
 import Graphics
 import Utils
 
-fileprivate let log = Logger(label: "Graphics.Image")
+fileprivate let log = Logger(label: "CairoGraphics.CairoImage")
 
 /**
  * An image that internally wraps a Cairo surface.
