@@ -192,6 +192,13 @@ public final class CoreGraphicsContext: GraphicsContext {
         cgContext.textPosition = CGPoint(x: bounds.minX + offset.x, y: bounds.minY + offset.y)
         CTLineDraw(line, cgContext)
     }
+
+    public func withUnsafeMutableBytes(_ body: (UnsafeMutableBufferPointer<UInt8>) throws -> Void) throws {
+        guard let dataPointer = dataPointer else {
+            throw GraphicsContextError.noRawBuffer
+        }
+        try body(dataPointer)
+    }
 }
 
 extension Color {

@@ -58,7 +58,7 @@ let package = Package(
         .testTarget(
             name: "GraphicsTests",
             dependencies: [
-                .target(name: "Graphics"),
+                .target(name: "PlatformGraphics"),
             ]
         )
     ]

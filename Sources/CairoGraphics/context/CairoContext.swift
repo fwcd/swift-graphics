@@ -184,4 +184,11 @@ public final class CairoContext: GraphicsContext {
 
         context.restore()
     }
+
+    public func withUnsafeMutableBytes(_ body: (UnsafeMutableBufferPointer<UInt8>) throws -> Void) throws {
+        try image.surface.withUnsafeMutableBytes {
+            let dataPointer = UnsafeMutableBufferPointer(start: $0, count: image.surface.stride * image.surface.height)
+            try body(dataPointer)
+        }
+    }
 }

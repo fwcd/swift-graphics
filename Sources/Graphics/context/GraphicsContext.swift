@@ -46,6 +46,9 @@ public protocol GraphicsContext {
 
     /** Draws the given polygon in this context. */
     func draw(polygon: Polygon<Double>)
+
+    /** Allow access to raw bytes. */
+    func withUnsafeMutableBytes(_ body: (UnsafeMutableBufferPointer<UInt8>) throws -> Void) throws
 }
 
 public extension GraphicsContext {
