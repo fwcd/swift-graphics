@@ -10,8 +10,15 @@ public struct Polygon<T: IntExpressibleAlgebraicField> {
         color: Color = ShapeDefaults.color,
         isFilled: Bool = ShapeDefaults.isFilled
     ) {
-        self.points = points
         self.color = color
         self.isFilled = isFilled
+
+        if isFilled && points.count > 1 && points.first! != points.last! {
+            var closedPoints = points
+            closedPoints.append(points.first!)
+            self.points = closedPoints
+        } else {
+            self.points = points
+        }
     }
 }
