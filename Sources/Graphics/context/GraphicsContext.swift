@@ -43,6 +43,9 @@ public protocol GraphicsContext {
 
     /** Draws the given text to this context. */
     func draw(text: Text)
+
+    /** Draws the given polygon in this context. */
+    func draw(polygon: Polygon<Double>)
 }
 
 public extension GraphicsContext {

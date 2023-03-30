@@ -100,6 +100,26 @@ public final class CairoContext: GraphicsContext {
         }
     }
 
+    public func draw(polygon: Polygon<Double>) {
+        guard polygon.points.count > 0 else {
+            return
+        }
+
+        markImageAsUnflushed()
+        context.setSource(color: polygon.color.asDoubleTuple)
+
+        context.move(to: polygon.points.first!.asTuple)
+        for point in polygon.points.suffix(polygon.points.count - 1) {
+            context.line(to: point.asTuple)
+        }
+
+        if polygon.isFilled {
+            context.fill()
+        } else {
+            context.stroke()
+        }
+    }
+
     public func draw(image: CairoImage, at position: Vec2<Double>, withSize size: Vec2<Int>, rotation optionalRotation: Double?) {
         draw(surface: image.surface, of: image.size, at: position, withSize: size, rotation: optionalRotation)
     }
