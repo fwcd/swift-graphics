@@ -127,11 +127,13 @@ public final class CoreGraphicsContext: GraphicsContext {
     }
 
     public func draw(polygon: Graphics.Polygon<Double>) {
-        guard polygon.points.count > 0 else {
+        guard polygon.paths.count > 0 else {
             return
         }
         withPath(color: polygon.color, isFilled: polygon.isFilled) {
-            cgContext.addLines(between: polygon.points.map { cgPoint(for: $0) })
+            for path in polygon.paths {
+                cgContext.addLines(between: path.map { cgPoint(for: $0) })
+            }
         }
     }
 

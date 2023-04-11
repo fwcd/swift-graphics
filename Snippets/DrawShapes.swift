@@ -12,10 +12,25 @@ func generatePngImage() throws -> Data {
     ctx.draw(text: Text("Test", at: Vec2(x: 0, y: 15)))
     ctx.draw(ellipse: Ellipse(centerX: 150, y: 80, radius: 40))
     ctx.draw(polygon: Polygon(points: [
-        Vec2(x: 210.0, y: 150.0),
-        Vec2(x: 100.0, y: 200.0),
-        Vec2(x: 170.0, y: 250.0)
-    ], isFilled: false))
+        Vec2(x: 250.0, y: 120.0),
+        Vec2(x: 280.0, y: 250.0),
+        Vec2(x: 200.0, y: 170.0),
+        Vec2(x: 300.0, y: 170.0),
+        Vec2(x: 220.0, y: 250.0)
+    ], isFilled: true))
+    ctx.draw(polygon: Polygon(paths: [
+        [
+            Vec2(x: 20.0, y: 150.0),
+            Vec2(x: 120.0, y: 150.0),
+            Vec2(x: 120.0, y: 250.0),
+            Vec2(x: 20.0, y: 250.0)
+        ],
+        [
+            Vec2(x: 70.0, y: 170.0),
+            Vec2(x: 10.0, y: 220.0),
+            Vec2(x: 130.0, y: 220.0),
+        ]
+    ], isFilled: true))
 
     // Encode the image to a byte buffer
     let image = try ctx.makeImage()
