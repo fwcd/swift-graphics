@@ -13,7 +13,7 @@ public struct Polygon<T: IntExpressibleAlgebraicField> {
         self.color = color
         self.isFilled = isFilled
 
-        if isFilled && points.count > 1 && points.first! != points.last! {
+        if points.count > 1 && points.first! != points.last! {
             var closedPoints = points
             closedPoints.append(points.first!)
             self.points = closedPoints

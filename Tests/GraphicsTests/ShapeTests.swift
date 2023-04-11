@@ -14,7 +14,8 @@ final class ShapeTests: XCTestCase {
     func testStrokedPolygon() {
         let points = [Vec2(x: 1, y: 2), Vec2(x: 2, y: 2), Vec2(x: 1, y: 1)]
         let polygon = Polygon(points: points, isFilled: false)
-        XCTAssertEqual(points, polygon.points, "Polygon should not have modified points")
+        XCTAssertEqual(points.count + 1, polygon.points.count, "Polygon should have extra points")
+        XCTAssertEqual(polygon.points.first!, polygon.points.last!, "Polygon should be closed.")
     }
 
     func testFilledPolygon() {
