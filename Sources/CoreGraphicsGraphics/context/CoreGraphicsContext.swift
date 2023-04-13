@@ -126,6 +126,17 @@ public final class CoreGraphicsContext: GraphicsContext {
         }
     }
 
+    public func draw(polygon: Graphics.Polygon<Double>) {
+        guard polygon.paths.count > 0 else {
+            return
+        }
+        withPath(color: polygon.color, isFilled: polygon.isFilled) {
+            for path in polygon.paths {
+                cgContext.addLines(between: path.map { cgPoint(for: $0) })
+            }
+        }
+    }
+
     public func draw(ellipse: Ellipse<Double>) {
         withPath(color: ellipse.color, isFilled: ellipse.isFilled) {
             cgContext.addEllipse(in: cgRect(for: ellipse.boundingRectangle))
