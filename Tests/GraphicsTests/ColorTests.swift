@@ -2,10 +2,6 @@ import XCTest
 @testable import Graphics
 
 final class ColorTests: XCTestCase {
-	static var allTests = [
-		("testColor", testColor)
-	]
-
 	func testColor() throws {
 		let yellowRGB = Color(rgb: 0xFFFF00)
 		XCTAssertEqual(yellowRGB.red, 0xFF)

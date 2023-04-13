@@ -1,16 +1,8 @@
 import XCTest
-
 import Utils
-
 @testable import Graphics
 
 final class ShapeTests: XCTestCase {
-    static var allTests = [
-        ("testStrokedPolygon", testStrokedPolygon),
-        ("testFilledPolygon", testFilledPolygon),
-        ("testFilledPolygonAlreadyClosed", testFilledPolygonAlreadyClosed),
-    ]
-
     func testEmptyPointsList() {
         let polygon = Polygon(points: [Vec2<Double>]())
         XCTAssertEqual(polygon.paths.count, 0)
