@@ -19,7 +19,11 @@ public final class CairoContext: GraphicsContext {
     }
 
     public convenience init(width: Int, height: Int) throws {
-        self.init(image: try CairoImage(width: width, height: height))
+        try self.init(width: width, height: height, format: .rgba32)
+    }
+
+    public convenience init(width: Int, height: Int, format: PixelFormat) throws {
+        self.init(image: try CairoImage(width: width, height: height, format: format))
     }
 
     public func makeImage() throws -> CairoImage {

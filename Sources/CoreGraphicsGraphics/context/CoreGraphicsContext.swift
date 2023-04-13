@@ -11,14 +11,45 @@ import AppKit
 import UIKit
 #endif
 
-private let rgbColorSpace = CGColorSpaceCreateDeviceRGB()
+
+private extension PixelFormat {
+
+    var colorSpace: CGColorSpace {
+        switch self {
+            case .rgba32:
+                return CGColorSpaceCreateDeviceRGB()
+            case .g8:
+                return CGColorSpaceCreateDeviceGray()
+        }
+    }
+
+    var bitsPerPixel: Int {
+        switch self {
+            case .rgba32:
+                return 4
+            case .g8:
+                return 1
+        }
+    }
+
+    var bitmapInfo: UInt32 {
+        switch self {
+            case .rgba32:
+                return CGBitmapInfo.byteOrder32Big.rawValue |
+                    CGImageAlphaInfo.premultipliedLast.rawValue &
+                    CGBitmapInfo.alphaInfoMask.rawValue
+            case .g8:
+                return 0
+        }
+    }
+}
 
 /**
  * A graphics context that uses CoreGraphics for its drawing primitives.
  */
 public final class CoreGraphicsContext: GraphicsContext {
     private let cgContext: CGContext
-    private var dataPointer: UnsafeMutableBufferPointer<UInt32>?
+    private var dataPointer: UnsafeMutableBufferPointer<UInt8>?
 
     deinit {
         dataPointer?.deallocate()
@@ -29,16 +60,16 @@ public final class CoreGraphicsContext: GraphicsContext {
         dataPointer = nil
     }
 
-    public init(width: Int, height: Int) throws {
-        let dataPointer = UnsafeMutableBufferPointer<UInt32>.allocate(capacity: width * height)
+    public init(width: Int, height: Int, format: PixelFormat) throws {
+        let dataPointer = UnsafeMutableBufferPointer<UInt8>.allocate(capacity: width * height * format.bitsPerPixel)
         guard let cgContext = CGContext(
             data: dataPointer.baseAddress,
             width: width,
             height: height,
             bitsPerComponent: 8,
-            bytesPerRow: width * 4,
-            space: rgbColorSpace,
-            bitmapInfo: CGBitmapInfo.byteOrder32Big.rawValue | CGImageAlphaInfo.premultipliedLast.rawValue & CGBitmapInfo.alphaInfoMask.rawValue,
+            bytesPerRow: width * format.bitsPerPixel,
+            space: format.colorSpace,
+            bitmapInfo: format.bitmapInfo,
             releaseCallback: nil,
             releaseInfo: nil
         ) else {
@@ -47,6 +78,10 @@ public final class CoreGraphicsContext: GraphicsContext {
 
         self.dataPointer = dataPointer
         self.cgContext = cgContext
+    }
+
+    public convenience init (width: Int, height: Int) throws {
+        try self.init(width: width, height: height, format: .rgba32)
     }
 
     public func makeImage() throws -> CoreGraphicsImage {

@@ -1,12 +1,20 @@
 import Utils
 
+public enum PixelFormat {
+    case rgba32
+    case g8
+}
+
 /** A stateful 2D drawing environment. */
 public protocol GraphicsContext {
     associatedtype Image: Sized
     associatedtype SVG: Sized
 
-    /** Creates a new context with the given width and height. */
+    /** Creates a new context with the given width and height in RGBA32. */
     init(width: Int, height: Int) throws
+
+    /** Creates a new context with the given width and height and format. */
+    init(width: Int, height: Int, format: PixelFormat) throws
 
     /** Creates an image from this context. */
     func makeImage() throws -> Image
