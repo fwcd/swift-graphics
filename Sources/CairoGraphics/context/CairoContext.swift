@@ -18,8 +18,8 @@ public final class CairoContext: GraphicsContext {
         self.image = image
     }
 
-    public convenience init(width: Int, height: Int) throws {
-        self.init(image: try CairoImage(width: width, height: height))
+    public convenience init(width: Int, height: Int, format: PixelFormat) throws {
+        self.init(image: try CairoImage(width: width, height: height, format: format))
     }
 
     public func makeImage() throws -> CairoImage {

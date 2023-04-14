@@ -6,6 +6,18 @@ import Utils
 
 fileprivate let log = Logger(label: "CairoGraphics.CairoImage")
 
+private extension PixelFormat {
+
+    var imageFormat: ImageFormat {
+        switch self {
+            case .rgba32:
+                return .argb32
+            case .g8:
+                return .a8
+        }
+    }
+}
+
 /**
  * An image that internally wraps a Cairo surface.
  */
@@ -55,13 +67,10 @@ public final class CairoImage: BufferedImage {
         return try surface.writePNG()
     }
 
-    public convenience init(width: Int, height: Int) throws {
-        let surface = try Surface.Image(format: .argb32, width: width, height: height)
-        self.init(rawSurface: surface)
-    }
 
-    public convenience init(size: Vec2<Int>) throws {
-        try self.init(width: size.x, height: size.y)
+    public convenience init(width: Int, height: Int, format: PixelFormat) throws {
+        let surface = try Surface.Image(format: format.imageFormat, width: width, height: height)
+        self.init(rawSurface: surface)
     }
 
     public subscript(_ y: Int, _ x: Int) -> Color {
