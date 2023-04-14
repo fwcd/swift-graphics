@@ -67,21 +67,10 @@ public final class CairoImage: BufferedImage {
         return try surface.writePNG()
     }
 
-    public convenience init(width: Int, height: Int) throws {
-        try self.init(width: width, height: height, format: .rgba32)
-    }
-
-    public convenience init(size: Vec2<Int>) throws {
-        try self.init(size: size, format: .rgba32)
-    }
 
     public convenience init(width: Int, height: Int, format: PixelFormat) throws {
         let surface = try Surface.Image(format: format.imageFormat, width: width, height: height)
         self.init(rawSurface: surface)
-    }
-
-    public convenience init(size: Vec2<Int>, format: PixelFormat) throws {
-        try self.init(width: size.x, height: size.y, format: format)
     }
 
     public subscript(_ y: Int, _ x: Int) -> Color {
