@@ -1,17 +1,9 @@
 import Utils
 
-public enum PixelFormat {
-    case rgba32
-    case g8
-}
-
 /** A stateful 2D drawing environment. */
 public protocol GraphicsContext {
     associatedtype Image: Sized
     associatedtype SVG: Sized
-
-    /** Creates a new context with the given width and height in RGBA32. */
-    init(width: Int, height: Int) throws
 
     /** Creates a new context with the given width and height and format. */
     init(width: Int, height: Int, format: PixelFormat) throws
@@ -54,6 +46,12 @@ public protocol GraphicsContext {
 
     /** Draws the given polygon in this context. */
     func draw(polygon: Polygon<Double>)
+}
+
+public extension GraphicsContext {
+    init (width: Int, height: Int) throws {
+        try self.init(width: width, height: height, format: .rgba32)
+    }
 }
 
 public extension GraphicsContext {

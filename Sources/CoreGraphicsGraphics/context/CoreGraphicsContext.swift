@@ -23,7 +23,7 @@ private extension PixelFormat {
         }
     }
 
-    var bitsPerPixel: Int {
+    var bytesPerPixel: Int {
         switch self {
             case .rgba32:
                 return 4
@@ -61,13 +61,13 @@ public final class CoreGraphicsContext: GraphicsContext {
     }
 
     public init(width: Int, height: Int, format: PixelFormat) throws {
-        let dataPointer = UnsafeMutableBufferPointer<UInt8>.allocate(capacity: width * height * format.bitsPerPixel)
+        let dataPointer = UnsafeMutableBufferPointer<UInt8>.allocate(capacity: width * height * format.bytesPerPixel)
         guard let cgContext = CGContext(
             data: dataPointer.baseAddress,
             width: width,
             height: height,
             bitsPerComponent: 8,
-            bytesPerRow: width * format.bitsPerPixel,
+            bytesPerRow: width * format.bytesPerPixel,
             space: format.colorSpace,
             bitmapInfo: format.bitmapInfo,
             releaseCallback: nil,
@@ -78,10 +78,6 @@ public final class CoreGraphicsContext: GraphicsContext {
 
         self.dataPointer = dataPointer
         self.cgContext = cgContext
-    }
-
-    public convenience init (width: Int, height: Int) throws {
-        try self.init(width: width, height: height, format: .rgba32)
     }
 
     public func makeImage() throws -> CoreGraphicsImage {

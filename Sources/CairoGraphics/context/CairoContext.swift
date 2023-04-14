@@ -18,10 +18,6 @@ public final class CairoContext: GraphicsContext {
         self.image = image
     }
 
-    public convenience init(width: Int, height: Int) throws {
-        try self.init(width: width, height: height, format: .rgba32)
-    }
-
     public convenience init(width: Int, height: Int, format: PixelFormat) throws {
         self.init(image: try CairoImage(width: width, height: height, format: format))
     }
