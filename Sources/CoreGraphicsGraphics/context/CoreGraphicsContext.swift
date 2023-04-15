@@ -62,6 +62,7 @@ public final class CoreGraphicsContext: GraphicsContext {
 
     public init(width: Int, height: Int, format: PixelFormat) throws {
         let dataPointer = UnsafeMutableBufferPointer<UInt8>.allocate(capacity: width * height * format.bytesPerPixel)
+        dataPointer.initialize(repeating: 0)
         guard let cgContext = CGContext(
             data: dataPointer.baseAddress,
             width: width,
