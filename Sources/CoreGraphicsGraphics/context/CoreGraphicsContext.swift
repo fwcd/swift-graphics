@@ -194,11 +194,11 @@ public final class CoreGraphicsContext: GraphicsContext {
         CTLineDraw(line, cgContext)
     }
 
-    public func withUnsafeMutableBytes(_ body: (UnsafeMutableBufferPointer<UInt8>) throws -> Void) throws {
+    public func withUnsafeMutableBytes(_ body: (UnsafeMutableBufferPointer<UInt8>, Int) throws -> Void) throws {
         guard let dataPointer = dataPointer else {
             throw GraphicsContextError.noRawBuffer
         }
-        try body(dataPointer)
+        try body(dataPointer, width * format.bytesPerPixel)
     }
 }
 
