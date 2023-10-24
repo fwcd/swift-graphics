@@ -26,12 +26,6 @@ jobs:
     - name: Install system dependencies (macOS)
       if: runner.os == 'macOS'
       run: brew install pkg-config cairo freetype2
-      # Workaround for FFI modulemap redefinition error, see
-      # - https://github.com/orgs/Homebrew/discussions/4025
-      # - https://github.com/tauri-apps/tauri/issues/1150#issuecomment-768310979
-    - name: Remove duplicate FFI headers (macOS)
-      if: runner.os == 'macOS'
-      run: find "/Library/Developer/CommandLineTools/SDKs" -name "MacOSX*.sdk" -type d -depth 1 -exec bash -c '[ -d {}/usr/include/ffi ] && sudo mv {}/usr/include/ffi{,.backup}' \;
     - name: Build
       run: swift build
     - name: Test
