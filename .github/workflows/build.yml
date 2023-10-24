@@ -25,7 +25,7 @@ jobs:
       run: sudo apt-get update && sudo apt-get install -y libcairo2-dev
     - name: Install system dependencies (macOS)
       if: runner.os == 'macOS'
-      run: brew install pkg-config cairo freetype2
+      run: brew update && brew install pkg-config cairo freetype2
     - name: Build
       run: swift build
     - name: Test
