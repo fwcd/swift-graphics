@@ -3,6 +3,7 @@ import CoreGraphics
 import ImageIO
 import Foundation
 import Graphics
+import UniformTypeIdentifiers
 
 public struct CoreGraphicsImage: Image {
     public let cgImage: CGImage
@@ -31,7 +32,7 @@ public struct CoreGraphicsImage: Image {
 
     public func pngEncoded() throws -> Data {
         guard let data = CFDataCreateMutable(nil, 0),
-              let dest = CGImageDestinationCreateWithData(data, kUTTypePNG, 1, nil) else {
+              let dest = CGImageDestinationCreateWithData(data, UTType.png.identifier as CFString, 1, nil) else {
             throw ImageError.couldNotCreatePngBuffer
         }
         CGImageDestinationAddImage(dest, cgImage, nil)
