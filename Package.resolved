@@ -23,8 +23,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/fwcd/swift-utils.git",
       "state" : {
-        "revision" : "7101c523c5986cecc3c667662aba66805ea6e7ce",
-        "version" : "2.0.0"
+        "revision" : "b292686fd4846a7ee97802868aa2f8872c10b0d1",
+        "version" : "3.0.0"
       }
     },
     {
