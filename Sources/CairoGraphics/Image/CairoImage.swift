@@ -7,7 +7,6 @@ import Utils
 fileprivate let log = Logger(label: "CairoGraphics.CairoImage")
 
 private extension PixelFormat {
-
     var imageFormat: ImageFormat {
         switch self {
             case .rgba32:

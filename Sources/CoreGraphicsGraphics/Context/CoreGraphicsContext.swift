@@ -11,9 +11,7 @@ import AppKit
 import UIKit
 #endif
 
-
 private extension PixelFormat {
-
     var colorSpace: CGColorSpace {
         switch self {
             case .rgba32:
