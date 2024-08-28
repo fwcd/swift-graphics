@@ -16,7 +16,7 @@ let package = Package(
     dependencies: [
         // Dependencies declare other packages that this package depends on.
         .package(url: "https://github.com/apple/swift-log.git", from: "1.4.0"),
-        .package(url: "https://github.com/fwcd/swift-utils.git", from: "3.0.7"),
+        .package(url: "https://github.com/fwcd/swift-utils.git", from: "4.0.0"),
         .package(url: "https://github.com/fwcd/swift-cairo.git", from: "1.3.4"),
     ],
     targets: [
