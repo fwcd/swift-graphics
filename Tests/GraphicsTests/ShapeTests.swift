@@ -55,4 +55,25 @@ final class ShapeTests: XCTestCase {
         XCTAssertEqual(polygon.paths.first!.count, closedpoints.count, "Closed path shouldn't have more points")
         XCTAssertEqual(polygon.paths.last!.count, openpoints.count + 1, "Open path should have an additional point")
     }
+
+    func testRectangleCorners() {
+        let rect = Rectangle<Double>(topLeft: Vec2(x: 2, y: 1), size: Vec2(x: 1, y: 3))
+
+        assertApproxEqual(rect.topLeft, Vec2(x: 2, y: 1))
+        assertApproxEqual(rect.topCenter, Vec2(x: 2.5, y: 1))
+        assertApproxEqual(rect.topRight, Vec2(x: 3, y: 1))
+
+        assertApproxEqual(rect.centerLeft, Vec2(x: 2, y: 2.5))
+        assertApproxEqual(rect.center, Vec2(x: 2.5, y: 2.5))
+        assertApproxEqual(rect.centerRight, Vec2(x: 3, y: 2.5))
+
+        assertApproxEqual(rect.bottomLeft, Vec2(x: 2, y: 4))
+        assertApproxEqual(rect.bottomCenter, Vec2(x: 2.5, y: 4))
+        assertApproxEqual(rect.bottomRight, Vec2(x: 3, y: 4))
+    }
+
+    private func assertApproxEqual(_ vec1: Vec2<Double>, _ vec2: Vec2<Double>, accuracy: Double = 0.0001, line: UInt = #line) {
+        XCTAssertEqual(vec1.x, vec2.x, accuracy: accuracy, line: line)
+        XCTAssertEqual(vec1.y, vec2.y, accuracy: accuracy, line: line)
+    }
 }
