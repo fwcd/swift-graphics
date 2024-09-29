@@ -8,16 +8,16 @@ public struct Rectangle<T: IntExpressibleAlgebraicField> {
     public var rotation: T?
     public var cornerRadius: T?
 
-    public var topCenter: Vec2<T> { return topLeft + Vec2(x: size.x / 2) }
-    public var topRight: Vec2<T> { return topLeft + Vec2(x: size.x) }
+    public var topCenter: Vec2<T> { return topLeft + Vec2<T>(x: size.x / 2) }
+    public var topRight: Vec2<T> { return topLeft + Vec2<T>(x: size.x) }
 
-    public var bottomLeft: Vec2<T> { return topLeft + Vec2(y: size.y) }
-    public var bottomCenter: Vec2<T> { return topLeft + Vec2(x: size.x / 2, y: size.y) }
+    public var bottomLeft: Vec2<T> { return topLeft + Vec2<T>(y: size.y) }
+    public var bottomCenter: Vec2<T> { return topLeft + Vec2<T>(x: size.x / 2, y: size.y) }
     public var bottomRight: Vec2<T> { return topLeft + size }
 
-    public var centerLeft: Vec2<T> { return topLeft + Vec2(y: size.y / 2) }
+    public var centerLeft: Vec2<T> { return topLeft + Vec2<T>(y: size.y / 2) }
     public var center: Vec2<T> { return topLeft + (size / 2) }
-    public var centerRight: Vec2<T> { return topLeft + Vec2(x: size.x, y: size.y / 2) }
+    public var centerRight: Vec2<T> { return topLeft + Vec2<T>(x: size.x, y: size.y / 2) }
 
     public var width: T { return size.x }
     public var height: T { return size.y }
@@ -48,7 +48,7 @@ public struct Rectangle<T: IntExpressibleAlgebraicField> {
         color: Color = ShapeDefaults.color,
         isFilled: Bool = ShapeDefaults.isFilled
     ) {
-        self.init(topLeft: Vec2(x: x, y: y), size: Vec2(x: width, y: height), rotation: rotation, cornerRadius: cornerRadius, color: color, isFilled: isFilled)
+        self.init(topLeft: Vec2<T>(x: x, y: y), size: Vec2<T>(x: width, y: height), rotation: rotation, cornerRadius: cornerRadius, color: color, isFilled: isFilled)
     }
 }
 
@@ -74,9 +74,9 @@ extension Rectangle: Sequence where T: Comparable {
             guard let pos = current else { return nil }
 
             if pos.x < end.x {
-                current = Vec2(x: pos.x + 1, y: pos.y)
+                current = Vec2<T>(x: pos.x + 1, y: pos.y)
             } else if pos.y < end.y {
-                current = Vec2(x: start.x, y: pos.y + 1)
+                current = Vec2<T>(x: start.x, y: pos.y + 1)
             } else {
                 current = nil
             }
